@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <link rel="stylesheet" href="/css/application.css" />
+    <title>Etape 2</title>
+  </head>
+  <body class="h-screen bg-gray-200">
+    <main>
+      <form action="/register-step-3" method="post">
+        <input type="hidden" id="selectedHour" name="selectedHour" required />
+        <input type="hidden" id="selectedService" name="selectedService" required />
+        <div
+          class="flex flex-wrap md:flex-no-wrap space-x-0 md:space-x-3 h-screen"
+        >
+          <div class="md:w-2/5 m-auto">
+            <div
+              class="md:bg-white md:shadow-md md:rounded-lg py-6 antialiased sans-serif flex flex-col items-center justify-center"
+            >
+              <label class="font-semibold text-lg sm:text-xl mb-1"
+                >Selectionner une heure</label
+              >
+
+              <div
+                class="grid grid-cols-3 md:grid-cols-4 mx-3 md:-mx-40 mt-3 md:mt-12 bg-white shadow-md md:shadow-none rounded md:rounded-none"
+              >
+                <button
+                  th:each="hour : ${availableHour}"
+                  th:text="${hour.toString()}"
+                  th:id="'hour' + ${hour.startHour}"
+                  th:onclick="'getHour(event)'"
+                  type="button"
+                  class="hourButton m-3 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                ></button>
+              </div>
+
+              <div class="mt-12">
+                <button
+                  th:onclick="'getStepThree()'"
+                  id="next"
+                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
+                  Suivant
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="md:w-2/5 m-auto">
+            <div class="flex flex-col w-screen sm:w-1/2">
+              <button
+                th:each="service : ${serviceProvided}"
+                th:inline="text"
+                th:id="${service.getName()}"
+                th:onclick="'getService(event)'"
+                type="button"
+                class="mx-6 md:mx-1 mt-8 p-4 flex justify-between bg-gray-300 hover:bg-gray-400 focus:outline-none font-semibold rounded-lg capitalize"
+              >
+                [[${service.getName()}]]
+                <span th:text="${service.getPrice()} + ' €'"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </main>
+    <script src="/js/app.js"></script>
+  </body>
+</html>

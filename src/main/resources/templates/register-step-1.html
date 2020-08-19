@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <link rel="stylesheet" href="/css/application.css" />
+      <title>Reservation carwash - Etape 1</title>
+  </head>
+  <body
+    class="h-screen overflow-hidden flex items-center justify-center bg-gray-200"
+  >
+    <div class="h-screen w-screen flex items-center justify-center ">
+      <div class="antialiased sans-serif">
+        <div class="max-w-md mx-auto px-4 py-2 md:py-10">
+          <form action="/register-step-2" method="post">
+            <div class="flex flex-col mb-5 w-64">
+              <label
+                for="datepicker"
+                class="font-bold mb-1 text-gray-700 text-lg block"
+                >Selectionner une date</label
+              >
+
+              <input
+                type="hidden"
+                id="selectedDate"
+                name="selectedDate"
+                required
+              />
+              <div>
+                <div
+                  class="bg-white mt-12 rounded-lg shadow p-4"
+                  style="width: 17rem"
+                >
+                  <div class="flex justify-between items-center mb-2">
+                    <div>
+                      <span
+                        class="text-lg font-bold text-gray-800"
+                        th:text="${MONTH}"
+                      ></span>
+                      <span
+                        class="ml-1 text-lg text-gray-600 font-normal"
+                        th:text="${YEAR}"
+                      ></span>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-wrap mb-3 -mx-1">
+                    <div
+                      th:each="day : ${DAYS}"
+                      style="width: 14.26%"
+                      class="px-1"
+                    >
+                      <div
+                        th:text="${day}"
+                        class="text-gray-800 font-medium text-center text-xs"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-wrap -mx-1">
+                    <div
+                      th:each="blankday : ${blankdays}"
+                      style="width: 14.28%"
+                      class="text-center border p-1 border-transparent text-sm"
+                    ></div>
+
+                    <div
+                      th:each="date : ${numberOfDaysInCurrentMonth}"
+                      style="width: 14.28%"
+                      class="px-1 mb-1"
+                    >
+                      <div
+                        th:text="${date.day}"
+                        th:attr="ontouchstart=${date.isBeforeToday() OR date.isNoWorkingDay() ?  null : 'getDateValue(event)'}"
+                        th:attrappend="onclick=${date.isBeforeToday() OR date.isNoWorkingDay() ?  null : 'getDateValue(event)'}"
+                        class="text-center text-sm leading-none rounded-full leading-loose transition ease-in-out duration-100"
+                        th:classappend="${date.isBeforeToday() OR date.isNoWorkingDay()} ? 'cursor-not-allowed select-none' : 'cursor-pointer select-none border border-blue-500 hover:border-transparent hover:bg-blue-200 hover:text-gray-700' "
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="justify-center mt-12">
+                <button
+                  id="next"
+                  th:onclick="'getStepTwo()'"
+                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
+                  Suivant
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="/js/app.js"></script>
+  </body>
+</html>

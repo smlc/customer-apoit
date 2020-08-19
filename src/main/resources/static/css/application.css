@@ -1,6 +1,9 @@
 /* purgecss start ignore */
 @tailwind  base;
 @tailwind  components;
+.fa-award:before {
+  content: "\e900";
+}
 /* purgecss end ignore */
 @tailwind  utilities;
 

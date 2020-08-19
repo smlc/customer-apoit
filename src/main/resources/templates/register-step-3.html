@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <link rel="stylesheet" href="/css/application.css" />
+    <title>Etape 3</title>
+  </head>
+  <body class="flex h-screen bg-gray-200">
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 m-auto">
+      <form action="/validate" method="post" name="appointmentData">
+        <div class="flex flex-col">
+          <div class="-mx-3 md:flex mb-2">
+            <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+              <label
+                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                for="user-email"
+              >
+                Email
+              </label>
+              <input
+                class="appearance-none block w-full text-gray-700 bg-gray-200 border border-red rounded py-3 px-4 mb-3"
+                id="user-email"
+                name="userEmail"
+                type="email"
+                placeholder="email@exemple.com"
+              />
+            </div>
+            <div class="md:w-1/2 px-3">
+              <label
+                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                for="user-phone"
+              >
+                Téléphone
+              </label>
+              <input
+                class="appearance-none block w-full text-gray-700 bg-gray-200 border rounded py-3 px-4"
+                id="user-phone"
+                name="userPhone"
+                type="phone"
+                placeholder="0694111111"
+              />
+            </div>
+          </div>
+          <div class="mb-6">
+            <label
+              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              for="user-adress"
+            >
+            Lieu du lavage
+            </label>
+            <input
+              class="appearance-none block w-full text-gray-700 bg-gray-200 border border-red rounded py-3 px-4 mb-3"
+              id="user-address"
+              name="place"
+              type="text"
+              placeholder="Entrer une adresse"
+              required
+            />
+          </div>
+          <p class="text-red text-xs italic text-gray-700" id="warning-msg">
+            On aura besoin de soit votre téléphone ou email pour confirmation.
+          </p>
+
+          <button
+            th:onclick="'validateLastStep()'"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Valider
+          </button>
+        </div>
+        <input type="hidden" id="selectedDate" name="selectedDate" />
+        <input type="hidden" id="selectedHour" name="selectedHour" />
+        <input type="hidden" id="selectedService" name="selectedService" />
+      </form>
+    </div>
+    <script src="/js/app.js"></script>
+  </body>
+</html>

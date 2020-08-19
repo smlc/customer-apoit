@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <link rel="stylesheet" href="/css/application.css" />
+    <title>Dashboard</title>
+    <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.min.js"
+      defer
+    ></script>
+  </head>
+<body class="font-mono bg-gray-400">
+    <!-- Container -->
+    <div class="container mx-auto">
+        <div class="flex justify-center px-6 my-12">
+            <!-- Row -->
+            <div class="w-full xl:w-3/4 lg:w-11/12 flex">
+                <!-- Col -->
+                <div
+                    class="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg"
+                    id="plusbeauQueOdy"
+                    style="background-image: url('/img/washcar.jpg')"
+                ></div>
+                <!-- Col -->
+                <div class="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none">
+                    <h3 class="pt-4 text-2xl text-center">Bienvenue!</h3>
+                    <form th:action="@{/loginDash}" method="post" class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
+                        <div class="mb-4">
+                            <label class="block mb-2 text-sm font-bold text-gray-700" for="username">
+                                Nom utilisateur
+                            </label>
+                            <input
+                                class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                name="username"
+                                type="text"
+                                placeholder="nom utilisateur admin"
+                            />
+                        </div>
+                        <div class="mb-4">
+                            <label class="block mb-2 text-sm font-bold text-gray-700" for="password">
+                                Mot de passe
+                            </label>
+                            <input
+                                class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                name="password"
+                                type="password"
+                                placeholder="******************"
+                            />
+                        </div>
+                        <div class="mb-4">
+                            <input class="mr-2 leading-tight" type="checkbox" id="checkbox_id" />
+                            <label class="text-sm" for="checkbox_id">
+                                Se rappeler
+                            </label>
+                        </div>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <div class="mb-6 text-center">
+                            <button
+                                class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+                            >
+                                Se connecter
+                            </button>
+                        </div>
+                        <hr class="mb-6 border-t" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</body>
+</html>
