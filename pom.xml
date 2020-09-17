@@ -102,10 +102,11 @@
 						<execution>
 							<id>run-gulp-build</id>
 							<goals>
-								<goal>gulp</goal>
+								<goal>npm</goal>
 							</goals>
 							<configuration>
-								<arguments>build</arguments>
+								<arguments>npm run build-prod</arguments>
+								<npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
 							</configuration>
 						</execution>
 					</executions>
