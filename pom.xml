@@ -111,7 +111,7 @@
 								<goal>npm</goal>
 							</goals>
 							<configuration>
-								<arguments>run build-prod</arguments>
+								<arguments>run build</arguments>
 								<npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
 							</configuration>
 						</execution>
