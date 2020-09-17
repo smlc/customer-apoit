@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -61,15 +61,14 @@ public class CalendarService {
 			workingDayHourStart = LocalDateTime.now().getHour();
 		}
 
-		//Set<Integer> bookedHourByDay = appointmentDB.findBookedHourByDay(dateTime);
+		Set<Integer> bookedHourByDay = appointmentDB.findBookedHourByDay(dateTime);
 
-		/*for(int i = workingDayHourStart; i < workingDayHourEnd; i+=2) {
+		for(int i = workingDayHourStart; i < workingDayHourEnd; i+=2) {
 			if(!bookedHourByDay.contains(i)){
 				result.add(new AvailableHour(i, i + 2));
 			}
-		}*/
-		return Arrays.asList(new AvailableHour(8, 10), new AvailableHour(10, 12),
-				new AvailableHour(12, 14), new AvailableHour(14, 16));
+		}
+		return result;
 	}
 
 }
