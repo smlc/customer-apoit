@@ -31,7 +31,7 @@ public class MemorySecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/**").hasRole("ADMIN")
 				.antMatchers( "/ressources/**", "/*").permitAll()
 				.and()
-				.csrf().ignoringAntMatchers("/register-step*")
+				.csrf().ignoringAntMatchers("/register-step*", "/validate")
 				.and()
 				.formLogin()
 				.loginPage("/loginDash")
