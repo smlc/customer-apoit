@@ -1,6 +1,7 @@
 package com.appointement.app.custoapp.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,12 +24,14 @@ public class MemorySecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
-
 		http
+				.httpBasic().and()
 				.authorizeRequests()
 				.antMatchers("/dashboard").hasRole("ADMIN")
 				.antMatchers("/api/**").hasRole("ADMIN")
-				.antMatchers( "/ressources/**").permitAll()
+				.antMatchers( "/ressources/**", "/*").permitAll()
+				.and()
+				.csrf().ignoringAntMatchers("/register-step*")
 				.and()
 				.formLogin()
 				.loginPage("/loginDash")

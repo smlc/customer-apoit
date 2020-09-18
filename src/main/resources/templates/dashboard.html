@@ -319,7 +319,7 @@
           numberOfAppointments : 0,
           appointments: [],
           fetchAppointment() {
-            fetch(`http://localhost:8080/appointment`)
+            fetch(`http://localhost:8080/api/appointment`)
               .then((res) => res.json())
               .then((data) => {
                 this.appointments = data;

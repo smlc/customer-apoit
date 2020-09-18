@@ -57,14 +57,9 @@ public class WebController {
 		return "register-step-1";
 	}
 
-	@GetMapping("/register")
-	public String register(Model model) {
-		return "register-1";
-	}
-
 	@PostMapping("/register-step-2")
 	public String getChosenDay(Model model, @ModelAttribute("selectedDate")String selectedDate) {
-
+		System.out.println("toto");
 		model.addAttribute("availableHour", calendarService.getAvailableHour(selectedDate));
 		model.addAttribute("serviceProvided", ServiceProvided.values());
 		return "register-step-2";
