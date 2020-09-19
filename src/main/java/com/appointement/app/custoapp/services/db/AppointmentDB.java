@@ -2,6 +2,7 @@ package com.appointement.app.custoapp.services.db;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -25,6 +26,8 @@ import static org.jooq.impl.DSL.hour;
 @Component
 public class AppointmentDB {
 
+	public static final int DURATION_OF_APPOINTMENT = 2;
+
 	private final Logger log = LoggerFactory.getLogger(AppointmentDB.class);
 
 	DSLContext dslContext;
@@ -35,11 +38,13 @@ public class AppointmentDB {
 
 	public Set<Integer> findBookedHourByDay(LocalDateTime day) {
 
-		OffsetDateTime searchDate = day.atOffset(ZoneOffset.ofHoursMinutes(-3, 00));
+		OffsetDateTime searchDate = day.atOffset(ZoneOffset.ofHoursMinutes(0, 00));
 		return dslContext.selectFrom(APPOINTMENT)
 				.where(day(APPOINTMENT.START_DATETIME_AT).eq(searchDate.getDayOfMonth()))
 				.fetch(APPOINTMENT.START_DATETIME_AT)
-				.stream().map(startTime -> startTime.getHour())
+				.stream()
+				.map(startTime -> startTime.atZoneSameInstant(ZoneId.ofOffset("UTC", ZoneOffset.ofHoursMinutes(0, 00))))
+				.map(startTime -> startTime.getHour())
 				.collect(Collectors.toSet());
 
 	}
@@ -57,7 +62,7 @@ public class AppointmentDB {
 		int numberOfRowInsert = dslContext.insertInto(APPOINTMENT)
 				.set(APPOINTMENT.ID, UUID.randomUUID())
 				.set(APPOINTMENT.START_DATETIME_AT, day.atOffset(ZoneOffset.ofHoursMinutes(0, 00)) )
-				.set(APPOINTMENT.END_DATETIME_AT,day.plusHours(2).atOffset(ZoneOffset.ofHoursMinutes(0, 00)))
+				.set(APPOINTMENT.END_DATETIME_AT,day.plusHours(DURATION_OF_APPOINTMENT).atOffset(ZoneOffset.ofHoursMinutes(0, 00)))
 				.set(APPOINTMENT.USER_EMAIL, email)
 				.set(APPOINTMENT.USER_PHONE, userPhone)
 				.set(APPOINTMENT.SERVICES, services)
@@ -76,9 +81,10 @@ public class AppointmentDB {
 	}
 
 	private DashboardData mapToDto(AppointmentRecord appointmentRecord) {
-		String dateFormat = "dd-MM-YYYY HH:MM";
-		return new DashboardData(appointmentRecord.getStartDatetimeAt().format(DateTimeFormatter.ofPattern(dateFormat)),
-				appointmentRecord.getEndDatetimeAt().format(DateTimeFormatter.ofPattern(dateFormat)),
+		String dateFormat = "dd-MM-YYYY HH:mm";
+
+		return new DashboardData(appointmentRecord.getStartDatetimeAt().atZoneSameInstant(ZoneId.ofOffset("UTC", ZoneOffset.ofHoursMinutes(0, 00))).format(DateTimeFormatter.ofPattern(dateFormat)),
+				appointmentRecord.getEndDatetimeAt().atZoneSameInstant(ZoneId.ofOffset("UTC", ZoneOffset.ofHoursMinutes(0, 00))).format(DateTimeFormatter.ofPattern(dateFormat)),
 				appointmentRecord.getUserPhone(),
 				appointmentRecord.getUserEmail(),
 				appointmentRecord.getServices(),

@@ -73,7 +73,6 @@ public class WebController {
 
 	@PostMapping("/register-step-3")
 	public String getChosenHour(Model model, @ModelAttribute("selectedHour")String selectedHour, @ModelAttribute("selectedService")String selectedService) {
-
 		return "register-step-3";
 	}
 
@@ -85,9 +84,7 @@ public class WebController {
 		model.addAttribute("selectedHour", appointmentInfo.getSelectedHour());
 		model.addAttribute("selectedService", appointmentInfo.getSelectedService());
 
-		appointmentValidationService.validateAppointment(appointmentInfo.getSelectedDate(),
-				appointmentInfo.getSelectedHour(), appointmentInfo.getSelectedService(),
-				appointmentInfo.getUserEmail(), appointmentInfo.getUserPhone(), appointmentInfo.getPlace());
+		appointmentValidationService.validateAppointment(appointmentInfo);
 
 		emailService.notifyNewAppointment(appointmentInfo);
 

@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import com.appointement.app.custoapp.beans.AppointmentInfo;
 import com.appointement.app.custoapp.services.db.AppointmentDB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +23,14 @@ public class AppointmentValidationService {
 		this.appointmentDB = appointmentDB;
 	}
 
-	public boolean validateAppointment(String selectDate, String selectedHour,
-			String services, String email, String userPhone, String place) {
+	public boolean validateAppointment(AppointmentInfo appointmentInfo) {
 
-		log.info("Ask validation of appointment : {}, {}, {}, {}", selectDate, selectedHour, services, place);
+		log.info("Ask validation of appointment : {}, {}, {}, {}", appointmentInfo.getSelectedDate(),
+				appointmentInfo.getSelectedHour(), appointmentInfo.getSelectedService(), appointmentInfo.getPlace());
 
 		//test if the date is valide, not weekend etc
-		LocalDateTime dateTime = LocalDateTime.parse(selectDate + " " + selectedHour, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+		LocalDateTime dateTime = LocalDateTime.parse(appointmentInfo.getSelectedDate() + " " + appointmentInfo.getSelectedHour(),
+				DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
 		if (dateTime.toLocalDate().isBefore(LocalDate.now()) || dateTime.getDayOfWeek().equals(DayOfWeek.SUNDAY)) return false;
 
@@ -36,7 +38,8 @@ public class AppointmentValidationService {
 		if(!appointmentDB.isAvailable(dateTime)) return false;
 
 		log.info("Going to save a new appointment in DB");
-		return appointmentDB.saveAppointment(dateTime, services, email, userPhone, "A VENIR", place);
+		return appointmentDB.saveAppointment(dateTime, appointmentInfo.getSelectedService(),
+				 appointmentInfo.getUserEmail(), appointmentInfo.getUserPhone(), "A VENIR", appointmentInfo.getPlace());
 	}
 
 
