@@ -111,6 +111,10 @@
 								<goal>npm</goal>
 							</goals>
 							<configuration>
+								<environmentVariables>
+        						<!-- Set host url in order to get it in gulp. Gulp will replace host url in ajax request-->
+        						<HOST_URL>${env.HOST_URL}</HOST_URL>
+    							</environmentVariables>
 								<arguments>run build-prod</arguments>
 								<npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
 							</configuration>

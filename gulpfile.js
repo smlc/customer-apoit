@@ -9,7 +9,7 @@ const postcss = require("gulp-postcss");
 const purgecss = require("gulp-purgecss");
 const replace = require('gulp-replace');
 
-const productionHost = "https://carwashdiff.herokuapp.com/api/appointment";
+const hostUrl = process.env.HOST_URL;
 const production = environments.production;
 
 gulp.task("watch", () => {
@@ -30,7 +30,7 @@ gulp.task("watch", () => {
 
 gulp.task("copy-html", () =>
   gulp.src(["src/main/resources/**/*.html"])
-      .pipe(production(replace('http://localhost:8080/api/appointment', productionHost)))
+      .pipe(production(replace('http://localhost:8080/api/appointment', hostUrl)))
       .pipe(gulp.dest("target/classes/"))
 );
 
