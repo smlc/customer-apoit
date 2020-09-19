@@ -10,11 +10,10 @@
     <link rel="stylesheet" href="/css/application.css" />
     <title>Dashboard</title>
     <script
-      src="https://cdn.jsdelivr.nt/gh/alpinejs/alpine@v2.7.0/dist/alpine.min.js"
-      defer
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.min.js"
     ></script>
   </head>
-  <body class="">
+  <body>
     <div
       class="flex h-screen bg-gray-200 font-roboto"
       x-data="app()" 
@@ -346,7 +345,7 @@
               }
               return order === "desc" ? comparison * -1 : comparison;
             };
-          },
+          }
         };
       }
     </script>
