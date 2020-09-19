@@ -10,8 +10,11 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.appointement.app.custoapp.beans.DashboardData;
+import com.appointement.app.custoapp.controller.RestApiController;
 import com.appointement.app.custoapp.db.tables.records.AppointmentRecord;
 import org.jooq.DSLContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Component;
 
@@ -21,6 +24,8 @@ import static org.jooq.impl.DSL.hour;
 
 @Component
 public class AppointmentDB {
+
+	private final Logger log = LoggerFactory.getLogger(AppointmentDB.class);
 
 	DSLContext dslContext;
 
@@ -59,6 +64,8 @@ public class AppointmentDB {
 				.set(APPOINTMENT.STATUS, status)
 				.set(APPOINTMENT.PLACE, place)
 				.execute();
+
+		log.info("Save a new appointment");
 		return numberOfRowInsert == 1;
 	}
 

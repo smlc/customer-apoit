@@ -9,6 +9,8 @@ import com.appointement.app.custoapp.enums.ServiceProvided;
 import com.appointement.app.custoapp.services.AppointmentValidationService;
 import com.appointement.app.custoapp.services.CalendarService;
 import com.appointement.app.custoapp.services.EmailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class WebController {
+
+	private final Logger log = LoggerFactory.getLogger(WebController.class);
+
 	@Autowired
 	CalendarService calendarService;
 
@@ -49,6 +54,8 @@ public class WebController {
 
 	@GetMapping("/register-step-1")
 	public String getRest(Model model) {
+		log.info("Start register");
+
 		model.addAttribute("MONTH", MONTH.get(LocalDate.now().getMonthValue() - 1));
 		model.addAttribute("YEAR", LocalDate.now().getYear());
 		model.addAttribute("DAYS", DAYS);
@@ -59,7 +66,6 @@ public class WebController {
 
 	@PostMapping("/register-step-2")
 	public String getChosenDay(Model model, @ModelAttribute("selectedDate")String selectedDate) {
-		System.out.println("toto");
 		model.addAttribute("availableHour", calendarService.getAvailableHour(selectedDate));
 		model.addAttribute("serviceProvided", ServiceProvided.values());
 		return "register-step-2";
@@ -74,6 +80,7 @@ public class WebController {
 	@PostMapping("/validate")
 	public String validae(Model model, @ModelAttribute("appointmentData") AppointmentInfo appointmentInfo) {
 
+
 		model.addAttribute("selectedDate", appointmentInfo.getSelectedDate());
 		model.addAttribute("selectedHour", appointmentInfo.getSelectedHour());
 		model.addAttribute("selectedService", appointmentInfo.getSelectedService());
@@ -83,6 +90,9 @@ public class WebController {
 				appointmentInfo.getUserEmail(), appointmentInfo.getUserPhone(), appointmentInfo.getPlace());
 
 		emailService.notifyNewAppointment(appointmentInfo);
+
+		log.info("Validate register");
+
 		return "resume";
 	}
 }

@@ -6,11 +6,15 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import com.appointement.app.custoapp.services.db.AppointmentDB;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class AppointmentValidationService {
+
+	private final Logger log = LoggerFactory.getLogger(AppointmentValidationService.class);
 
 	private AppointmentDB appointmentDB;
 
@@ -21,6 +25,8 @@ public class AppointmentValidationService {
 	public boolean validateAppointment(String selectDate, String selectedHour,
 			String services, String email, String userPhone, String place) {
 
+		log.info("Ask validation of appointment : {}, {}, {}, {}", selectDate, selectedHour, services, place);
+
 		//test if the date is valide, not weekend etc
 		LocalDateTime dateTime = LocalDateTime.parse(selectDate + " " + selectedHour, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
@@ -29,6 +35,7 @@ public class AppointmentValidationService {
 		//test if still valide in DB
 		if(!appointmentDB.isAvailable(dateTime)) return false;
 
+		log.info("Going to save a new appointment in DB");
 		return appointmentDB.saveAppointment(dateTime, services, email, userPhone, "A VENIR", place);
 	}
 

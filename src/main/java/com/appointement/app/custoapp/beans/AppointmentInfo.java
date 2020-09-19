@@ -58,8 +58,6 @@ public class AppointmentInfo {
 				"selectedDate='" + selectedDate + '\'' +
 				", selectedHour='" + selectedHour + '\'' +
 				", selectedService='" + selectedService + '\'' +
-				", userPhone='" + userPhone + '\'' +
-				", userEmail='" + userEmail + '\'' +
 				", place='" + place + '\'' +
 				'}';
 	}
