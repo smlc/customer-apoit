@@ -35,7 +35,10 @@ public class AppointmentValidationService {
 		if (dateTime.toLocalDate().isBefore(LocalDate.now()) || dateTime.getDayOfWeek().equals(DayOfWeek.SUNDAY)) return false;
 
 		//test if still valide in DB
-		if(!appointmentDB.isAvailable(dateTime)) return false;
+		if(!appointmentDB.isAvailable(dateTime)) {
+			log.info("The asking time {} is not available anymore", dateTime);
+			return false;
+		}
 
 		log.info("Going to save a new appointment in DB");
 		return appointmentDB.saveAppointment(dateTime, appointmentInfo.getSelectedService(),

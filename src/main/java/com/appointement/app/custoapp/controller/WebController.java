@@ -79,17 +79,15 @@ public class WebController {
 	@PostMapping("/validate")
 	public String validae(Model model, @ModelAttribute("appointmentData") AppointmentInfo appointmentInfo) {
 
-
 		model.addAttribute("selectedDate", appointmentInfo.getSelectedDate());
 		model.addAttribute("selectedHour", appointmentInfo.getSelectedHour());
 		model.addAttribute("selectedService", appointmentInfo.getSelectedService());
 
-		appointmentValidationService.validateAppointment(appointmentInfo);
+		boolean valid = appointmentValidationService.validateAppointment(appointmentInfo);
 
-		emailService.notifyNewAppointment(appointmentInfo);
+		if (valid) emailService.notifyNewAppointment(appointmentInfo);
 
-		log.info("Validate register");
-
+		model.addAttribute("valid", valid);
 		return "resume";
 	}
 }

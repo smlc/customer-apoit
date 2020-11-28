@@ -11,27 +11,70 @@
     <title>Validation</title>
   </head>
   <body class="flex h-screen bg-gray-200">
-    <div class="bg-green-200 shadow-md rounded px-8 pt-6 pb-8 p- m-auto">
+    <div
+      class="shadow-md rounded px-8 pt-6 pb-8 p- m-auto"
+      th:classappend="${valid ? 'bg-green-200' : 'bg-red-200'}"
+    >
       <div class="flex flex-col items-center">
-        <div class="rounded-full p-2 fill-current text-gray-100">
-          <svg
-            class="w-32 h-32 align-middle"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+        <div>
+          <div
+            th:if="${valid == true}"
+            class="rounded-full p-2 fill-current text-gray-100"
           >
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-          </svg>
+            <svg
+              class="w-32 h-32 align-middle"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+
+          <div
+            th:if="${valid == false}"
+            class="rounded-full p-2 fill-current text-gray-100"
+          >
+              <svg enable-background="new 0 0 24 24" height="256" viewBox="0 0 24 24" width="256" xmlns="http://www.w3.org/2000/svg"><path d="m12 0c-6.617 0-12 5.383-12 12s5.383 12 12 12 12-5.383 12-12-5.383-12-12-12z" fill="none"/><path d="m12 24c-6.617 0-12-5.383-12-12s5.383-12 12-12 12 5.383 12 12-5.383 12-12 12zm0-22.5c-5.79 0-10.5 4.71-10.5 10.5s4.71 10.5 10.5 10.5 10.5-4.71 10.5-10.5-4.71-10.5-10.5-10.5z"/><path d="m8.288 16.463c-.192 0-.384-.073-.53-.22-.293-.293-.293-.768 0-1.061l7.425-7.425c.293-.293.768-.293 1.061 0s.293.768 0 1.061l-7.425 7.425c-.148.147-.34.22-.531.22z"/><path d="m15.712 16.463c-.192 0-.384-.073-.53-.22l-7.425-7.425c-.293-.293-.293-.768 0-1.061s.768-.293 1.061 0l7.425 7.425c.293.293.293.768 0 1.061-.147.147-.339.22-.531.22z"/></svg>
+          </div>
         </div>
-        <div th:inline="text" class="mt-4 text-gray-700 font-semibold text-sm">
-            <p >Votre lavage aura lieu le <span class="font-bold" th:text="${selectedDate}"></span> à <span class="font-bold" th:text="${selectedHour}"></span>.</p>
-            <p>Vous avez choisie <span class="font-bold capitalize" th:text="${selectedService}"></span>.</p>
+
+        <div
+          th:if="${valid == true}"
+          th:inline="text"
+          class="mt-4 text-gray-700 font-semibold text-sm flex flex-col items-center"
+        >
+          <p class="text-center">
+            Votre lavage aura lieu le
+            <span class="font-bold" th:text="${selectedDate}"></span> à
+            <span class="font-bold" th:text="${selectedHour}"></span>.
+          </p>
+          <p class="text-center">
+            Vous avez choisie
+            <span
+              class="font-bold capitalize"
+              th:text="${selectedService}"
+            ></span
+            >.
+          </p>
+        </div>
+
+        <div
+          th:if="${valid == false}"
+          th:inline="text"
+          class="mt-4 text-gray-700 font-semibold text-sm flex flex-col items-center"
+        >
+          <p class="text-center">
+            Malheuresment l'heure que vous avez sélectionné n'est plus disponible, choissez
+            une autre date.
+          </p>
+          <a class="text-gray-900 underline" href="register-step-1">Retour</a>
         </div>
       </div>
     </div>
